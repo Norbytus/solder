@@ -26,12 +26,12 @@ pub struct ArgInfo {
 impl ArgInfo {
     pub fn new(name: *const c_char, allow_null: c_char, is_variadic: c_char, by_reference: c_char) -> ArgInfo {
         ArgInfo {
-            name: name,
+            name,
             class_name: std::ptr::null(),
             type_hint: 0,
             pass_by_reference: by_reference,
-            allow_null: allow_null,
-            is_variadic: is_variadic,
+            allow_null,
+            is_variadic,
         }
     }
 }
@@ -148,14 +148,14 @@ impl ModuleBuilder {
                 zts: 0,
                 ini_entry: std::ptr::null(),
                 deps: std::ptr::null(),
-                name: name,
+                name,
                 functions: std::ptr::null(),
                 module_startup_func: None,
                 module_shutdown_func: None,
                 request_startup_func: None,
                 request_shutdown_func: None,
                 info_func: None,
-                version: version,
+                version,
                 globals_size: 0,
                 globals_ptr: std::ptr::null(),
                 globals_ctor: None,
