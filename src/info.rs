@@ -3,8 +3,8 @@ use std::ffi::CString;
 
 /// Module with functions to print a PHPInfo table
 ///
-/// ```
-/// use php::info::*;
+/// ```ignore
+/// use solder::info::*;
 /// print_table_start();
 /// print_table_row("gpg_keys", "enabled");
 /// print_table_end();

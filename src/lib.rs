@@ -10,9 +10,6 @@
 //! Example:
 //!
 //! ```rust
-//! extern crate libc;
-//! extern crate solder;
-//!
 //! use solder::*;
 //! use solder::zend::*;
 //! use solder::info::*;
@@ -48,14 +45,14 @@
 //! ```
 //!
 //! To compile it, we need to add to our `.cargo/config`:
-//! ```
+//! ```toml
 //! [build]
 //! rustflags = ["-C", "link-arg=-Wl,-undefined,dynamic_lookup"]
 //! ```
 //!
 //! Than, you compile the extension using `cargo build` and load it copying it to your PHP modules dir and modifying you `php.ini`.
 //!
-//! ```
+//! ```text
 //! $ cargo build && php -dextension=$(pwd)/target/debug/libhelloworld.so -a
 //!    Compiling solder v0.1.0 (/src)
 //!    Compiling helloworld v0.1.0 (/src/examples/helloworld)

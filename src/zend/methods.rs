@@ -3,7 +3,7 @@ use super::types::*;
 use std::ffi::CString;
 
 /// As the name suggests, this method is acts like a PHP echo
-/// ```
+/// ```edition2018
 /// php_echo("hello world");
 /// ```
 pub fn php_echo(message: &str) {
@@ -18,7 +18,7 @@ pub fn php_echo(message: &str) {
 ///
 /// This method does not checks if the closure is an actually closure. If you pass a Zval that is
 /// not a closure PHP may throw an error.
-/// ```
+/// ```edition2018
 /// use solder::zend::execute_closure;
 /// let mut closure = Zval::new_as_null();
 /// php_parse_parameters!(&mut closure);
@@ -37,7 +37,7 @@ pub fn execute_closure(callable: &mut Zval, params: &mut [Zval]) -> Zval {
 /// Macro to simplify executing a closure. The first parameter is the closure and the others are the
 /// parameters. It will return the closure return
 ///
-/// ```
+/// ```edition2018
 /// use solder::zend::execute_closure;
 /// let mut closure = Zval::new_as_null();
 /// php_parse_parameters!(&mut closure);
@@ -45,19 +45,19 @@ pub fn execute_closure(callable: &mut Zval, params: &mut [Zval]) -> Zval {
 /// ```
 #[macro_export]
 macro_rules! execute_closure{
-	($p1:expr, $p2:expr) => {
-		execute_closure($p1, &mut [Zval::from($p2)]);
-	};
-	($p1:expr, $p2:expr, $($rest:expr), *) => {
-	    execute_closure($p1, &mut [Zval::from($p2), $(Zval::from($rest)), *]);
-	}
+    ($p1:expr, $p2:expr) => {
+        execute_closure($p1, &mut [Zval::from($p2)]);
+    };
+    ($p1:expr, $p2:expr, $($rest:expr), *) => {
+        execute_closure($p1, &mut [Zval::from($p2), $(Zval::from($rest)), *]);
+    }
 }
 
 /// This macro parses all parameters passed to function. Currently, there is a limit of 5 parameters.
 /// If you try to get more parameters than what were passed to the function, PHP will emit a Warning
 /// and the excess zvals will be undefined.
 ///
-/// ```
+/// ```edition2018
 /// use solder::zend::{ExecuteData, Zval, FromPhpZval};
 /// #[no_mangle]
 /// pub extern fn hello_world(_data: &ExecuteData, retval: &mut Zval) {
@@ -70,12 +70,12 @@ macro_rules! execute_closure{
 /// ```
 #[macro_export]
 macro_rules! php_parse_parameters {
-	($p1:expr) => {
-		[$p1].parse_parameters();
-	};
-	($p1:expr, $($rest:expr), *) => {
-		[$p1, $($rest), *].parse_parameters();
-	}
+    ($p1:expr) => {
+        [$p1].parse_parameters();
+    };
+    ($p1:expr, $($rest:expr), *) => {
+        [$p1, $($rest), *].parse_parameters();
+    }
 }
 pub trait PhpParseParameters {
     fn parse_parameters(self: &mut Self);
