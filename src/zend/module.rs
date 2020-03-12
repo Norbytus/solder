@@ -1,16 +1,16 @@
+use libc::*;
 use std;
 use std::mem;
-use libc::*;
 
 use super::types::*;
 
-type StartupFunc = extern fn (type_: c_int, module_number: c_int) -> c_int;
-type ShutdownFunc = extern fn (type_: c_int, module_number: c_int) -> c_int;
-type InfoFunc = extern fn () ;
-type GlobalsCtorFunc = extern fn (global: *const c_void) -> c_void;
-type GlobalsDtorFunc = extern fn (global: *const c_void) -> c_void;
-type PostDeactivateFunc = extern fn () -> c_int;
-type HandlerFunc = extern fn (execute_data: &ExecuteData, retval: &mut Zval);
+type StartupFunc = extern "C" fn(type_: c_int, module_number: c_int) -> c_int;
+type ShutdownFunc = extern "C" fn(type_: c_int, module_number: c_int) -> c_int;
+type InfoFunc = extern "C" fn();
+type GlobalsCtorFunc = extern "C" fn(global: *const c_void) -> c_void;
+type GlobalsDtorFunc = extern "C" fn(global: *const c_void) -> c_void;
+type PostDeactivateFunc = extern "C" fn() -> c_int;
+type HandlerFunc = extern "C" fn(execute_data: &ExecuteData, retval: &mut Zval);
 
 #[repr(C)]
 pub struct ArgInfo {
@@ -24,7 +24,12 @@ pub struct ArgInfo {
 
 /// Information about the arguments of a function
 impl ArgInfo {
-    pub fn new(name: *const c_char, allow_null: c_char, is_variadic: c_char, by_reference: c_char) -> ArgInfo {
+    pub fn new(
+        name: *const c_char,
+        allow_null: c_char,
+        is_variadic: c_char,
+        by_reference: c_char,
+    ) -> ArgInfo {
         ArgInfo {
             name,
             class_name: std::ptr::null(),
@@ -85,7 +90,7 @@ impl FunctionBuilder {
     }
 
     /// Build the function
-    pub fn build(mut self)-> Function {
+    pub fn build(mut self) -> Function {
         if self.args.is_empty() {
             return self.function;
         }

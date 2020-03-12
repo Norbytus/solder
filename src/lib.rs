@@ -73,5 +73,5 @@ extern crate libc;
 
 #[macro_use]
 pub mod macros;
-pub mod zend;
 pub mod info;
+pub mod zend;
